@@ -202,19 +202,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const allImages = document.querySelectorAll('img');
 
   allImages.forEach((img) => {
-    // 이미 로드 실패 상태인지 확인
-    if (img.complete && img.naturalWidth === 0) {
+    const handleImageError = () => {
+      // 자동 경로 복구: ./assets/ 경로 실패 시 ./assets/image/ 시도 (또는 반대)
+      const currentSrc = img.getAttribute('src');
+      if (currentSrc && !img.dataset.fallbackRetried) {
+        img.dataset.fallbackRetried = 'true';
+        if (currentSrc.includes('/assets/image/')) {
+          img.src = currentSrc.replace('/assets/image/', '/assets/');
+          return;
+        } else if (currentSrc.includes('/assets/')) {
+          img.src = currentSrc.replace('/assets/', '/assets/image/');
+          return;
+        }
+      }
+
       if (img.parentElement && img.parentElement.classList.contains('image-wrapper')) {
         img.parentElement.classList.add('img-fallback');
       }
+    };
+
+    // 이미 로드 실패 상태인지 확인
+    if (img.complete && img.naturalWidth === 0) {
+      handleImageError();
     }
 
     // 로드 에러 이벤트 발생 시 처리
-    img.addEventListener('error', () => {
-      if (img.parentElement && img.parentElement.classList.contains('image-wrapper')) {
-        img.parentElement.classList.add('img-fallback');
-      }
-    });
+    img.addEventListener('error', handleImageError);
   });
 
 
