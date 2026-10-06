@@ -1,0 +1,2291 @@
+/* ==========================================================================
+   DUNID STUDIO // MODERN BRUTALIST & BALENCIAGA-EDITORIAL DESIGN SYSTEM
+   Inspired by Reference Images 1~24 (Balenciaga Concept, Dieter Rams Braun 1976,
+   Eunjeong Yoo Thermal Receipt UI, Apple AirPods Max, Office Siren Aesthetic)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS & CSS VARIABLES
+   -------------------------------------------------------------------------- */
+:root {
+  /* High-End Modern Typography Stack */
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Pretendard', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Space Grotesk', monospace;
+  --font-serif: 'Playfair Display', Georgia, serif;
+
+  /* Color Palette (Balenciaga Off-White, Dieter Rams Neon, High-Contrast Black) */
+  --bg-canvas: #F7F7F8;
+  --bg-card: #FFFFFF;
+  --bg-dark: #0B0C0E;
+  --bg-dark-card: #15161A;
+  --bg-receipt: #FDFCFA;
+
+  --text-primary: #0B0C0E;
+  --text-secondary: #484C56;
+  --text-muted: #878C99;
+  --text-inverse: #FFFFFF;
+
+  --accent-red: #E63946;
+  --accent-neon: #D4F600;      /* Dieter Rams & Balenciaga Electric Yellow */
+  --accent-blue: #0044FF;      /* Modernist Cobalt from Ref 22 */
+
+  /* Hairline Borders */
+  --border-black: 1px solid #0B0C0E;
+  --border-hairline: 1px solid rgba(11, 12, 14, 0.12);
+  --border-dark-hairline: 1px solid rgba(255, 255, 255, 0.15);
+  --border-dashed: 1px dashed rgba(11, 12, 14, 0.25);
+
+  /* Spacing Scale */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.2s var(--ease-out);
+  --transition-normal: 0.35s var(--ease-out);
+
+  /* Layout */
+  --max-width: 1240px;
+  --header-height: 64px;
+}
+
+/* --------------------------------------------------------------------------
+   2. GLOBAL RESETS & BASE STYLES
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body.editorial-body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.pc-only {
+  display: inline;
+}
+
+@media (max-width: 768px) {
+  .pc-only {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. TOP TICKER MARQUEE (Ref 11: Woodcraft Running Ticker)
+   -------------------------------------------------------------------------- */
+.top-ticker {
+  background: var(--bg-dark);
+  color: var(--text-inverse);
+  padding: 8px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  user-select: none;
+}
+
+.ticker__track {
+  display: inline-flex;
+  animation: tickerSlide 25s linear infinite;
+}
+
+.ticker__item {
+  margin-right: var(--space-xl);
+}
+
+@keyframes tickerSlide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* --------------------------------------------------------------------------
+   4. STICKY BALENCIAGA-EDITORIAL HEADER (#header)
+   -------------------------------------------------------------------------- */
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  background: rgba(247, 247, 248, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: var(--border-black);
+  z-index: 100;
+  transition: all var(--transition-normal);
+}
+
+.header--scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.header__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.header__logo {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.logo-mark {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+}
+
+.logo-sub {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.header__cat-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  padding: 2px 6px;
+  background: var(--bg-dark);
+  color: var(--accent-neon);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.header__nav {
+  display: block;
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  list-style: none;
+}
+
+.nav__link {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.nav-num {
+  color: var(--accent-red);
+  margin-right: 2px;
+}
+
+.nav__link:hover {
+  color: var(--text-primary);
+}
+
+.btn--header {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  background: var(--bg-dark);
+  color: var(--text-inverse);
+  border: 1px solid var(--bg-dark);
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn--header:hover {
+  background: var(--accent-neon);
+  color: var(--bg-dark);
+  border-color: var(--bg-dark);
+}
+
+@media (max-width: 860px) {
+  .header__nav {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. HERO SECTION (#hero) - Balenciaga Concept Grid (Ref 1)
+   -------------------------------------------------------------------------- */
+.hero {
+  border-bottom: var(--border-black);
+  background: #FFFFFF;
+}
+
+.hero__meta-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px var(--space-lg);
+  background: var(--bg-dark);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  overflow-x: auto;
+}
+
+.hero__meta-bar .meta-item strong {
+  color: #FFFFFF;
+  margin-left: 4px;
+}
+
+.text-neon {
+  color: var(--accent-neon) !important;
+}
+
+.hero__container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--space-3xl);
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+  align-items: center;
+}
+
+.hero__eyebrow-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.badge--brutalist {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: var(--bg-dark);
+  color: var(--accent-neon);
+  padding: 4px 8px;
+  display: inline-block;
+}
+
+.hero__crosshair {
+  font-family: var(--font-mono);
+  color: var(--accent-red);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.hero__target-calling {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--accent-red);
+  padding-left: var(--space-sm);
+  line-height: 1.4;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 900;
+  line-height: 1.18;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.hero__title-highlight {
+  color: var(--accent-red);
+  background: rgba(230, 57, 70, 0.08);
+  padding: 0 4px;
+}
+
+.hero__subcopy {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-xl);
+}
+
+.hero__features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+  padding-top: var(--space-md);
+  border-top: var(--border-black);
+}
+
+.feature-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.feature-chip__num {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--accent-red);
+}
+
+.feature-chip__text strong {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.feature-chip__text span {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* Hero CTA Button */
+.hero__cta-group {
+  margin-bottom: var(--space-xl);
+}
+
+.hero__cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7);
+  animation: pulse 1.6s infinite;
+}
+
+.mono-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  background: var(--bg-dark);
+  color: var(--text-inverse);
+  padding: 2px 6px;
+  letter-spacing: 0.05em;
+}
+
+.btn--cta.btn--brutalist {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 16px 28px;
+  background: var(--accent-red);
+  color: #FFFFFF;
+  border: 2px solid var(--bg-dark);
+  box-shadow: 4px 4px 0px var(--bg-dark);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  transition: all var(--transition-fast);
+}
+
+.btn--cta.btn--brutalist:hover {
+  background: var(--bg-dark);
+  color: var(--accent-neon);
+  box-shadow: 6px 6px 0px var(--accent-red);
+  transform: translate(-2px, -2px);
+}
+
+.btn--cta.btn--brutalist:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--bg-dark);
+}
+
+.btn-arrow {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.hero__microcopy {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+}
+
+.coupang-partners-notice {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+.coupang-partners-notice--dark {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.hero__scroll-nudge {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scroll-tag {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.scroll-action {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Hero Visual & Inset Benchmark Card */
+.editorial-card {
+  background: #FFFFFF;
+  border: var(--border-black);
+  box-shadow: 8px 8px 0px var(--bg-dark);
+  padding: var(--space-lg);
+  position: relative;
+}
+
+.card__top-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  padding-bottom: var(--space-xs);
+  border-bottom: var(--border-black);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.05em;
+}
+
+.hero__image-main .image-wrapper {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hero__card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-md);
+  margin-top: var(--space-md);
+  border-top: var(--border-black);
+}
+
+.tag-title {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 900;
+  display: block;
+}
+
+.tag-meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.card__barcode-block {
+  text-align: right;
+}
+
+.sim-barcode {
+  font-family: var(--font-mono);
+  letter-spacing: -2px;
+  font-weight: 900;
+  font-size: 0.875rem;
+}
+
+.barcode-num {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-muted);
+}
+
+/* Inset Ref 01 Card */
+.hero__ref-inset {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  background: #FFFDF0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.ref-inset__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.ref-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  background: var(--bg-dark);
+  color: #FFFFFF;
+  padding: 2px 6px;
+}
+
+.ref-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.ref-thumb {
+  max-height: 180px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ref-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ref-caption {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+/* --------------------------------------------------------------------------
+   6. SECTIONS COMMON LAYOUT
+   -------------------------------------------------------------------------- */
+.section {
+  padding: var(--space-4xl) 0;
+  border-bottom: var(--border-black);
+}
+
+.section__header {
+  margin-bottom: var(--space-3xl);
+}
+
+.section__eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  margin-bottom: var(--space-xs);
+}
+
+.section__num {
+  font-size: 1.125rem;
+  font-weight: 900;
+  color: var(--accent-red);
+}
+
+.section__category {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-sm);
+}
+
+.section__lead {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   7. DETAIL 1: PAIN SECTION & CONTRAST (Refs 13, 14, 15, 16, 17, 18, 19, 21)
+   -------------------------------------------------------------------------- */
+.section--pain {
+  background: var(--bg-canvas);
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-3xl);
+}
+
+.problem-card {
+  background: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.problem-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: var(--space-sm);
+}
+
+.problem-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: var(--accent-red);
+  letter-spacing: 0.05em;
+}
+
+.problem-stat {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-muted);
+}
+
+.problem-card__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+
+.problem-card__visual {
+  margin-bottom: var(--space-md);
+}
+
+.visual-caption {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 6px;
+}
+
+.problem-card__desc {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  flex-grow: 1;
+}
+
+.problem-card__ref-study {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  padding-top: var(--space-sm);
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+  background: #F9F9FB;
+  padding: 8px;
+}
+
+.ref-study__thumb {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.ref-study__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ref-study__info {
+  font-size: 0.75rem;
+}
+
+.ref-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: var(--accent-red);
+  display: block;
+}
+
+.ref-study__info p {
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+/* Editorial Contrast Banner (Balenciaga Work's Ref 17, 15, 21) */
+.editorial-banner {
+  background: var(--bg-dark);
+  color: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-2xl);
+  margin-top: var(--space-2xl);
+}
+
+.editorial-banner__grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.editorial-banner__photo img {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.photo-caption {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--accent-neon);
+  display: block;
+  margin-top: 6px;
+}
+
+.editorial-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--accent-neon);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.editorial-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.5vw, 1.875rem);
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: var(--space-md);
+}
+
+.editorial-text {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.editorial-sub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.sub-photo img {
+  height: 140px;
+  width: 100%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sub-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: block;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   8. DETAIL 2: SOLUTION & ARCHITECTURE (Refs 3, 5, 7, 22, 23)
+   -------------------------------------------------------------------------- */
+.section--solution {
+  background: #FFFFFF;
+}
+
+.transformation-master {
+  margin-bottom: var(--space-3xl);
+}
+
+.transformation-card {
+  border: var(--border-black);
+  background: #FFFFFF;
+  box-shadow: 6px 6px 0px var(--bg-dark);
+}
+
+.transformation-badge-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px var(--space-md);
+  background: var(--bg-dark);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.badge--dark {
+  background: var(--accent-red);
+  color: #FFFFFF;
+  padding: 2px 8px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.transformation-visual-wrap {
+  background: #F9F9FA;
+  padding: var(--space-md);
+}
+
+.comparison-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.comparison-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.comparison-item .image-wrapper {
+  aspect-ratio: 16 / 10;
+  max-height: 420px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #EAEAEA;
+}
+
+.comparison-item .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.comparison-item:hover .image-wrapper img {
+  transform: scale(1.03);
+}
+
+.comparison-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 8px 12px;
+  margin-top: 8px;
+  display: block;
+}
+
+.comparison-tag--before {
+  background: rgba(230, 57, 70, 0.1);
+  color: var(--accent-red);
+  border-left: 3px solid var(--accent-red);
+}
+
+.comparison-tag--after {
+  background: rgba(0, 68, 255, 0.08);
+  color: var(--accent-blue);
+  border-left: 3px solid var(--accent-blue);
+}
+
+.transformation-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: var(--space-md) var(--space-lg);
+  border-top: var(--border-black);
+  background: #FFFFFF;
+}
+
+.metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.metric-val {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.text-red {
+  color: var(--accent-red) !important;
+}
+
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-3xl);
+}
+
+.pillar-card {
+  border: var(--border-black);
+  padding: var(--space-lg);
+  background: var(--bg-canvas);
+  display: flex;
+  flex-direction: column;
+}
+
+.pillar-num {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--accent-red);
+  margin-bottom: var(--space-2xs);
+}
+
+.pillar-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: var(--space-sm);
+  letter-spacing: -0.02em;
+}
+
+.pillar-desc {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  flex-grow: 1;
+}
+
+.pillar-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 6px;
+}
+
+/* Architecture Inspiration Gallery (Refs 3, 5, 7, 22, 23) */
+.architecture-gallery {
+  border: var(--border-black);
+  background: #FFFFFF;
+  padding: var(--space-xl);
+}
+
+.gallery__top {
+  margin-bottom: var(--space-xl);
+}
+
+.badge--outline {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  border: 1px solid var(--text-primary);
+  padding: 2px 6px;
+  display: inline-block;
+  margin-bottom: var(--space-2xs);
+}
+
+.gallery__title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.gallery__item {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  background: #FDFDFD;
+}
+
+.gallery__item .image-wrapper {
+  height: 180px;
+  overflow: hidden;
+}
+
+.gallery__item .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery__caption {
+  margin-top: 8px;
+}
+
+.caption-id {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: var(--accent-red);
+  display: block;
+}
+
+.caption-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+/* --------------------------------------------------------------------------
+   9. DETAIL 3: PROOF & PRECISION ENGINEERING (Refs 6, 8, 9, 12)
+   -------------------------------------------------------------------------- */
+.section--proof {
+  background: var(--bg-canvas);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-3xl);
+}
+
+.metric-card {
+  background: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-lg);
+  position: relative;
+}
+
+.metric-card__label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: var(--space-2xs);
+}
+
+.metric-card__value {
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.03em;
+}
+
+.metric-card__desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.metric-card__tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  background: var(--bg-dark);
+  color: var(--accent-neon);
+  padding: 2px 4px;
+}
+
+/* Engineering Showcase: Dieter Rams (Ref 8) & Knolling (Ref 6) */
+.engineering-showcase {
+  margin-bottom: var(--space-3xl);
+}
+
+.engineering-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+}
+
+.dieter-rams-card, .knolling-card {
+  background: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-xl);
+  box-shadow: 6px 6px 0px var(--bg-dark);
+}
+
+.rams__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.rams__year-badge {
+  background: var(--accent-neon);
+  color: #000000;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  font-size: 0.875rem;
+  padding: 4px 8px;
+  border: 1px solid #000000;
+}
+
+.rams__tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+}
+
+.rams__title, .knolling__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: var(--space-2xs);
+}
+
+.rams__sub, .knolling__sub {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.rams__visual img, .knolling__visual img {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: var(--space-md);
+}
+
+.rams__spec-table {
+  border-top: var(--border-black);
+  padding-top: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.rams__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.knolling__parts-list {
+  border-top: var(--border-black);
+  padding-top: var(--space-sm);
+  font-size: 0.8125rem;
+}
+
+.part-item {
+  padding: 4px 0;
+}
+
+.part-item span {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--accent-red);
+  margin-right: 4px;
+}
+
+/* Proof Visuals & CAD / Specs Grid (Refs 12 & 9) */
+.proof-visuals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-3xl);
+}
+
+.proof-card {
+  background: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-lg);
+}
+
+.proof-card__header {
+  margin-bottom: var(--space-sm);
+}
+
+.proof-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  background: var(--bg-dark);
+  color: #FFFFFF;
+  padding: 2px 6px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.proof-title {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+
+.proof-meta-box {
+  margin-top: var(--space-sm);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.blueprint__ref-inset {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+}
+
+.blueprint__ref-inset .ref-thumb {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #000000;
+}
+
+.ref-note {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+}
+
+.specs-table-card {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+}
+
+.specs-table__head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.specs-badge {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: var(--accent-red);
+}
+
+.specs-title {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+
+.specs-table th, .specs-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.specs-table th {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-align: left;
+  width: 35%;
+  color: var(--text-muted);
+}
+
+/* 3-Step Easy Installation */
+.steps-section {
+  background: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-3xl);
+}
+
+.steps-header {
+  margin-bottom: var(--space-lg);
+}
+
+.steps-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 900;
+  margin-top: 6px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.step-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: var(--space-md);
+  background: var(--bg-canvas);
+}
+
+.step-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  background: var(--accent-red);
+  color: #FFFFFF;
+  padding: 2px 6px;
+  display: inline-block;
+  margin-bottom: var(--space-2xs);
+}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Reviews */
+.reviews-section {
+  border-top: var(--border-black);
+  padding-top: var(--space-2xl);
+}
+
+.reviews-header {
+  margin-bottom: var(--space-lg);
+}
+
+.reviews-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 900;
+  margin-top: 6px;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.review-card {
+  background: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-lg);
+}
+
+.review-stars {
+  color: #FFB703;
+  font-size: 1.125rem;
+  margin-bottom: var(--space-xs);
+}
+
+.review-text {
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  font-style: italic;
+}
+
+.review-author strong {
+  display: block;
+  font-size: 0.875rem;
+}
+
+.review-author span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   10. EDITORIAL LOOKBOOK SECTION (Refs 4, 13, 20)
+   -------------------------------------------------------------------------- */
+.section--lookbook {
+  background: #FFFFFF;
+}
+
+.lookbook-master {
+  border: var(--border-black);
+  background: var(--bg-canvas);
+  padding: var(--space-lg);
+}
+
+.lookbook-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: var(--space-lg);
+}
+
+.lookbook-main .image-wrapper {
+  border: var(--border-black);
+}
+
+.lookbook-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.badge-sub {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.lookbook-aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.aside-card {
+  background: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-sm);
+}
+
+.aside-card .image-wrapper {
+  height: 220px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.aside-card .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.aside-desc {
+  padding-top: var(--space-xs);
+  font-size: 0.75rem;
+}
+
+.aside-desc strong {
+  font-family: var(--font-mono);
+  display: block;
+  color: var(--text-primary);
+}
+
+.aside-desc span {
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   11. DETAIL 4: FAQ SECTION & BAUHAUS (Ref 10)
+   -------------------------------------------------------------------------- */
+.section--faq {
+  background: var(--bg-canvas);
+}
+
+.bauhaus-callout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  background: #FFFFFF;
+  border: var(--border-black);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+}
+
+.bauhaus-callout__img {
+  width: 120px;
+  flex-shrink: 0;
+  border: 1px solid #000000;
+}
+
+.bauhaus-callout__text h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin: 6px 0;
+}
+
+.bauhaus-callout__text p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.faq-item {
+  background: #FFFFFF;
+  border: var(--border-black);
+  transition: all var(--transition-fast);
+}
+
+.faq-item--active {
+  box-shadow: 4px 4px 0px var(--bg-dark);
+}
+
+.faq-question {
+  width: 100%;
+  padding: var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  text-align: left;
+  background: none;
+}
+
+.faq-q-badge {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--accent-red);
+}
+
+.faq-q-text {
+  flex: 1;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.faq-icon {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  width: 24px;
+  text-align: center;
+}
+
+.faq-answer {
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+  background: #FAFAFB;
+}
+
+.faq-answer__inner {
+  padding: var(--space-lg);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.faq-helper-box {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.faq-helper-box .image-wrapper {
+  max-width: 480px;
+  margin-bottom: var(--space-xs);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.helper-text {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.faq-tip {
+  margin-top: var(--space-sm);
+  padding: 8px 12px;
+  background: #FFFDF0;
+  border-left: 3px solid var(--accent-neon);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   12. FINAL CTA & THERMAL ORDER RECEIPT CARD (Ref 2 Eunjeong Yoo Receipt)
+   -------------------------------------------------------------------------- */
+.section--cta {
+  background: var(--bg-dark);
+  color: #FFFFFF;
+  padding: var(--space-4xl) 0;
+}
+
+.cta-card--editorial {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--space-3xl);
+  background: #111215;
+}
+
+.cta-card__grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+/* Eunjeong Yoo Thermal Receipt (Ref 2) */
+.thermal-receipt {
+  background: var(--bg-receipt);
+  color: #000000;
+  padding: var(--space-xl) var(--space-lg);
+  border: 1px solid #000000;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4);
+  position: relative;
+  font-family: var(--font-mono);
+}
+
+.receipt__header {
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.receipt__logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+.receipt__title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.875rem;
+  display: block;
+  margin: 4px 0;
+}
+
+.receipt__meta {
+  font-size: 0.6875rem;
+  color: #555555;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.receipt__dashed-line {
+  border-top: 1px dashed #777777;
+  margin: var(--space-sm) 0;
+}
+
+.receipt__art-wrap img {
+  border: 1px solid #000000;
+  max-height: 220px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.receipt__art-caption {
+  font-size: 0.625rem;
+  display: block;
+  text-align: center;
+  margin-top: 4px;
+  color: #666666;
+}
+
+.receipt__items {
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.receipt__totals {
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total-highlight {
+  font-size: 1.125rem;
+  font-weight: 900;
+  border-top: 1px solid #000000;
+  padding-top: 4px;
+  margin-top: 4px;
+}
+
+.receipt__barcode-block {
+  text-align: center;
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed #777777;
+}
+
+.receipt-barcode {
+  letter-spacing: -2px;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.receipt__barcode-block span {
+  font-size: 0.625rem;
+  display: block;
+}
+
+/* Serrated Receipt Bottom Edge */
+.receipt__serrated-bottom {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: radial-gradient(circle, transparent, transparent 50%, var(--bg-receipt) 50%, var(--bg-receipt) 100%);
+  background-size: 12px 12px;
+}
+
+/* Right Info Col */
+.urgency-pill {
+  display: inline-flex;
+  gap: var(--space-xs);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-neon);
+  padding: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: var(--space-md);
+}
+
+.cta-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  margin-bottom: var(--space-sm);
+}
+
+.cta-card__subcopy {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--space-xl);
+}
+
+/* Color Selection Matrix (Ref 4 Balenciaga Lister) */
+.color-matrix {
+  margin-bottom: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.matrix-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--accent-neon);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.color-options {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.color-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.color-pill.active {
+  border-color: var(--accent-neon);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.color-dot--white { background: #FFFFFF; }
+.color-dot--black { background: #000000; }
+
+.cta-action {
+  margin-bottom: var(--space-xl);
+}
+
+.btn--cta-large {
+  width: 100%;
+  padding: 20px 32px;
+  font-size: 1.125rem;
+}
+
+.cta-guarantee {
+  padding-top: var(--space-md);
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.guarantee-text {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: var(--space-sm);
+  line-height: 1.5;
+}
+
+.guarantee-tags {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.guarantee-tags span {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* --------------------------------------------------------------------------
+   13. FOOTER (Ref 4 Balenciaga Lister Footer Grid)
+   -------------------------------------------------------------------------- */
+.footer {
+  background: var(--bg-canvas);
+  border-top: var(--border-black);
+  padding: var(--space-3xl) 0 var(--space-xl);
+  font-size: 0.875rem;
+}
+
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-xl);
+}
+
+.footer__logo {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 900;
+  display: block;
+}
+
+.footer__tagline {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.back-to-top {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.back-to-top:hover {
+  color: var(--accent-red);
+}
+
+/* Category Matrix (Ref 4) */
+.footer__category-matrix {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border: var(--border-black);
+  margin-bottom: var(--space-2xl);
+  background: #FFFFFF;
+}
+
+.matrix-cell {
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-align: center;
+  border-right: var(--border-black);
+  letter-spacing: 0.05em;
+}
+
+.matrix-cell:last-child {
+  border-right: none;
+}
+
+.footer__meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  border-top: var(--border-black);
+  padding-top: var(--space-xl);
+}
+
+.footer__col-title {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  margin-bottom: var(--space-xs);
+  text-transform: uppercase;
+}
+
+.footer__meta-list {
+  list-style: none;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.footer__text {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   14. FLOATING QUICK TOP / ARCHIVE BADGE
+   -------------------------------------------------------------------------- */
+.floating-badge-asset {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 90;
+}
+
+.btn-floating-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #0B0C0E;
+  color: var(--accent-neon);
+  border: 1px solid var(--accent-neon);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  font-family: var(--font-mono);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-floating-top:hover {
+  transform: translateY(-4px);
+  background: var(--accent-neon);
+  color: #000000;
+}
+
+.floating-top-icon {
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.floating-top-txt {
+  font-size: 0.5625rem;
+  letter-spacing: 0.08em;
+}
+
+/* --------------------------------------------------------------------------
+   15. MODAL POPUP (#modal-ready)
+   -------------------------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.modal--active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 12, 14, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.modal__dialog--editorial {
+  position: relative;
+  width: 90%;
+  max-width: 440px;
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  box-shadow: 8px 8px 0px #000000;
+  padding: var(--space-2xl);
+  z-index: 2;
+  transform: scale(0.95);
+  transition: transform var(--transition-normal);
+}
+
+.modal--active .modal__dialog--editorial {
+  transform: scale(1);
+}
+
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 800;
+  border: 1px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  transition: all var(--transition-fast);
+}
+
+.modal__close:hover {
+  background: #000000;
+  color: #FFFFFF;
+}
+
+.modal__cat-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  background: var(--accent-neon);
+  color: #000000;
+  padding: 2px 6px;
+  border: 1px solid #000000;
+  display: inline-block;
+  margin-bottom: var(--space-xs);
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin-bottom: var(--space-sm);
+}
+
+.modal__notice {
+  font-size: 1rem;
+  color: var(--accent-red);
+  margin-bottom: var(--space-xs);
+}
+
+.modal__desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-md);
+}
+
+.modal__info-box {
+  background: var(--bg-canvas);
+  border: 1px solid #000000;
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  margin-bottom: var(--space-lg);
+}
+
+.info-label {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  display: block;
+}
+
+.info-val {
+  font-weight: 800;
+}
+
+.btn--confirm.btn--brutalist {
+  width: 100%;
+  padding: 12px;
+  background: #000000;
+  color: #FFFFFF;
+  border: 1px solid #000000;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  transition: all var(--transition-fast);
+}
+
+.btn--confirm.btn--brutalist:hover {
+  background: var(--accent-neon);
+  color: #000000;
+}
+
+/* --------------------------------------------------------------------------
+   16. IMAGE ERROR & FALLBACK UI
+   -------------------------------------------------------------------------- */
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #EAEAEA;
+}
+
+.img-fallback-message {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: #EAEAEA;
+  color: #888888;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #CCCCCC;
+}
+
+.image-wrapper.img-fallback img {
+  display: none !important;
+}
+
+.image-wrapper.img-fallback .img-fallback-message {
+  display: flex !important;
+}
+
+/* --------------------------------------------------------------------------
+   17. MOBILE RESPONSIVE STYLES
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .hero__container {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+  .hero__visual {
+    order: -1;
+  }
+  .editorial-banner__grid {
+    grid-template-columns: 1fr;
+  }
+  .engineering-grid {
+    grid-template-columns: 1fr;
+  }
+  .proof-visuals-grid {
+    grid-template-columns: 1fr;
+  }
+  .cta-card__grid {
+    grid-template-columns: 1fr;
+  }
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .lookbook-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer__category-matrix {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .matrix-cell {
+    border-bottom: var(--border-black);
+  }
+}
+
+@media (max-width: 768px) {
+  .problem-grid {
+    grid-template-columns: 1fr;
+  }
+  .comparison-split-grid {
+    grid-template-columns: 1fr;
+  }
+  .pillars-grid {
+    grid-template-columns: 1fr;
+  }
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer__meta-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .footer__bottom {
+    flex-direction: column;
+    gap: var(--space-xs);
+    text-align: center;
+  }
+  .hero__features {
+    grid-template-columns: 1fr;
+  }
+  .floating-badge-asset {
+    display: none;
+  }
+}
