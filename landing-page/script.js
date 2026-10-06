@@ -221,8 +221,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    // 이미 로드 실패 상태인지 확인
-    if (img.complete && img.naturalWidth === 0) {
+    const handleImageLoad = () => {
+      if (img.parentElement && img.parentElement.classList.contains('image-wrapper')) {
+        img.parentElement.classList.remove('img-fallback');
+      }
+    };
+
+    // 이미지 로드 완료 시 fallback 클래스 확실히 제거
+    img.addEventListener('load', handleImageLoad);
+
+    // 이미 로드 완료 상태 확인
+    if (img.complete && img.naturalWidth > 0) {
+      handleImageLoad();
+    } else if (img.complete && img.naturalWidth === 0) {
       handleImageError();
     }
 
