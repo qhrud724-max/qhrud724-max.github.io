@@ -217,4 +217,140 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+
+  /* =========================================================================
+     6. GA4 이벤트 트래킹 (구간 도달 section_view & CTA 클릭 cta_click)
+     ========================================================================= */
+  // 동일 스크립트 중복 실행 방지 가드
+  if (window.__ga4TrackingInitialized) {
+    return;
+  }
+  window.__ga4TrackingInitialized = true;
+
+  // 안전한 gtag 전송 래퍼 (GA 미로드 또는 차단 환경에서도 페이지 동작 보장)
+  const sendGaEvent = (eventName, params) => {
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, params);
+      }
+    } catch (err) {
+      console.warn('[GA4] Event dispatch error:', err);
+    }
+  };
+
+  /* -------------------------------------------------------------------------
+     6-1. 구간 도달 (section_view)
+     - 관찰 대상: #hero-title (hero), #detail-space-title (detail), #purchase-title (cta)
+     - IntersectionObserver로 제목 면적 50% 이상 노출 시 1회만 전송
+     - 고정 헤더 가림 높이(약 64px)를 rootMargin에서 제외
+     - 문서가 실제로 보이는 상태(!document.hidden)에서만 기록
+     - 탭 전환 후 복귀 시(visibilitychange) 현재 화면 제목 누락 방지
+     ------------------------------------------------------------------------- */
+  const sectionConfigs = [
+    { id: 'hero-title', sectionName: 'hero' },
+    { id: 'detail-space-title', sectionName: 'detail' },
+    { id: 'purchase-title', sectionName: 'cta' }
+  ];
+
+  // 단일 페이지 로드 내 section_name별 1회 전송 보장을 위한 Set
+  const viewedSections = new Set();
+
+  // 고정 헤더 높이 계산 (스크롤 시 상단 가려짐 영역 제외용)
+  const headerEl = document.getElementById('header') || document.querySelector('.header');
+  const getHeaderHeight = () => {
+    return headerEl ? Math.ceil(headerEl.getBoundingClientRect().height) : 64;
+  };
+
+  const triggerSectionView = (sectionName, targetEl, observer) => {
+    if (viewedSections.has(sectionName)) return;
+    if (document.hidden) return; // 활성 표시 상태에서만 기록
+
+    viewedSections.add(sectionName);
+    if (observer && targetEl) {
+      observer.unobserve(targetEl); // 전송 완료된 요소는 즉시 관찰 해제
+    }
+
+    sendGaEvent('section_view', {
+      section_name: sectionName
+    });
+  };
+
+  // IntersectionObserver 등록
+  let sectionObserver = null;
+  if ('IntersectionObserver' in window) {
+    sectionObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          const matched = sectionConfigs.find((c) => c.id === entry.target.id);
+          if (matched) {
+            triggerSectionView(matched.sectionName, entry.target, obs);
+          }
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: `-${getHeaderHeight()}px 0px 0px 0px`, // 고정 헤더 영역 제외
+      threshold: 0.5 // 제목 면적의 50% 이상
+    });
+
+    sectionConfigs.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) {
+        sectionObserver.observe(el);
+      }
+    });
+  }
+
+  // 백그라운드 탭에서 로드 후 전환되거나, 다른 탭에서 돌아왔을 때 현재 노출된 제목 보정 검사
+  const checkVisibleSectionsOnFocus = () => {
+    if (document.hidden) return;
+    const headerHeight = getHeaderHeight();
+
+    sectionConfigs.forEach(({ id, sectionName }) => {
+      if (viewedSections.has(sectionName)) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const visibleTop = Math.max(rect.top, headerHeight);
+      const visibleBottom = Math.min(rect.bottom, window.innerHeight);
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+      if (rect.height > 0 && (visibleHeight / rect.height) >= 0.5) {
+        triggerSectionView(sectionName, el, sectionObserver);
+      }
+    });
+  };
+
+  document.addEventListener('visibilitychange', checkVisibleSectionsOnFocus);
+
+
+  /* -------------------------------------------------------------------------
+     6-2. CTA 클릭 (cta_click)
+     - 관찰 대상: #cta-hero / [data-cta-location="hero"], #cta-final / [data-cta-location="final"]
+     - 마우스 클릭 및 키보드 Enter 시 1회당 1개 이벤트 전송
+     - 같은 버튼 재클릭 시 매번 새로운 클릭으로 기록
+     - e.preventDefault() 없이 원본 링크 즉시 이동 보장
+     ------------------------------------------------------------------------- */
+  const ctaConfigs = [
+    { selector: '#cta-hero, [data-cta-location="hero"]', location: 'hero' },
+    { selector: '#cta-final, [data-cta-location="final"]', location: 'final' }
+  ];
+
+  const boundCtaElements = new Set();
+
+  ctaConfigs.forEach(({ selector, location }) => {
+    const btn = document.querySelector(selector);
+    if (btn && !boundCtaElements.has(btn)) {
+      boundCtaElements.add(btn);
+
+      // 브라우저 표준 click 이벤트는 마우스 클릭 및 포커스 후 Enter 키 활성화를 모두 단 1회 이벤트로 트리거
+      btn.addEventListener('click', () => {
+        sendGaEvent('cta_click', {
+          button_location: location
+        });
+      });
+    }
+  });
+
 });
